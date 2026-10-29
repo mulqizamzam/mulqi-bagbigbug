@@ -37,6 +37,7 @@ for (const candidate of candidates.filter(skill => skill.name !== 'bagbigbug')) 
   assert.ok(loaded.content.startsWith('# Mandatory authorization and host-safety boundary (adapter-added)'))
   assert.ok(loaded.content.endsWith(original), sourcePath + ' source body must remain an unchanged suffix')
   assert.equal(loaded.metadata.sourceGitBlobSha1, candidate.metadata.sourceGitBlobSha1)
+  assert.ok(loaded.resourceBase.path.endsWith('/source/original/phases/'), 'relative resources resolve from the original phase directory')
   assert.equal(loaded.invocation.modelInvocable, false)
   assert.equal(loaded.invocation.userInvocable, true)
 }

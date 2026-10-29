@@ -13,6 +13,7 @@ const BUNDLED_SKILL_RANK = 600
 const PROVIDER_NAME = 'bagbigbug'
 const SOURCE_BASE = fileURLToPath(new URL('./', import.meta.url))
 const RESOURCE_BASE = { kind: 'directory', path: SOURCE_BASE }
+const PHASE_RESOURCE_BASE = { kind: 'directory', path: fileURLToPath(new URL('./source/original/phases/', import.meta.url)) }
 const INVOCATION = { modelInvocable: false, userInvocable: true }
 const ROUTER_URL = new URL('./instructions/bagbigbug.md', import.meta.url)
 const PHASES = [
@@ -144,7 +145,7 @@ const CANDIDATES = DEFINITIONS.map(function (definition) {
     invocation: INVOCATION,
     provider: PROVIDER_NAME,
     source: 'bundled',
-    resourceBase: RESOURCE_BASE,
+    resourceBase: definition.kind === 'phase' ? PHASE_RESOURCE_BASE : RESOURCE_BASE,
     rank: BUNDLED_SKILL_RANK,
     locator: definition.url,
     metadata: definition.metadata
@@ -175,7 +176,7 @@ const provider = {
       invocation: INVOCATION,
       provider: PROVIDER_NAME,
       source: 'bundled',
-      resourceBase: RESOURCE_BASE,
+      resourceBase: definition.kind === 'phase' ? PHASE_RESOURCE_BASE : RESOURCE_BASE,
       content: content,
       metadata: definition.metadata
     }
