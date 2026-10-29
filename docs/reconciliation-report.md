@@ -6,13 +6,15 @@
 **Source repository:** [`mdpsec/bug-bounty-hunting-prompts`](https://github.com/mdpsec/bug-bounty-hunting-prompts)  
 **Pinned source commit:** `5ed41580564c978417d5f0105f9c92457d77f3b5`  
 **Pinned source tree:** `802c7d82a957c7641dbe7585f755fd25e0fd3d4f`  
-**Report date:** 2026-10-30
+**Report date:** 2026-10-30  
+**Implementation commit with passing CI:** [`08074d86dfd957cf759f410b91a4f92a9741b2b6`](https://github.com/mulqizamzam/mulqi-bagbigbug/commit/08074d86dfd957cf759f410b91a4f92a9741b2b6)  
+**GitHub Actions:** [validation run 40966107750 — success](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/40966107750)
 
 ## Executive result
 
 The pinned upstream Git tree was enumerated with `truncated=false`. It contains **19 files** (five root files and 14 Markdown phase prompts), the `phases/` directory, **495,963 source bytes**, and 13 unique phase-content blobs. Every source item is assigned an explicit disposition in `docs/source-to-target-manifest.json`. No upstream file is intentionally excluded.
 
-The 19 original source blobs were transferred to the target Git object store and each target blob SHA-1 matched the source Git blob SHA-1. This establishes byte-identity at the Git object level for the files mirrored under `source/original/`. A post-commit tree check is still required to prove the final target paths and subtree identity. The two scope-only source files `phase-04a-scope.md` and `phase-05a-scope.md` have identical upstream blob IDs, but both file paths and separate runtime modules are retained.
+The 19 original source blobs were transferred to the target Git object store and each target blob SHA-1 matched the source Git blob SHA-1. This establishes byte-identity at the Git object level for the files mirrored under `source/original/`. The committed recursive target tree was subsequently checked: all 19 source-relative paths are present with matching blob IDs, and the `source/original/phases/` subtree SHA-1 equals the upstream subtree SHA-1. The two scope-only source files `phase-04a-scope.md` and `phase-05a-scope.md` have identical upstream blob IDs, but both file paths and separate runtime modules are retained.
 
 ## Inventory and dispositions
 
@@ -20,7 +22,7 @@ The 19 original source blobs were transferred to the target Git object store and
 |---|---:|---|
 | Root files: `.gitignore`, `ADAPTATION.md`, `LICENSE`, `README.md`, `SECURITY.md` | 5 | All verbatim at `source/original/<source path>`; license and security policy also copied to the repository root. |
 | Prompt phase files under `phases/` | 14 | All verbatim at `source/original/phases/`; each maps to a separate user-invocable, non-model-invocable runtime module. |
-| Source directories | 1 | `phases/` structure is mirrored. Its source tree SHA-1 is `5cdc77faf15d3f48f0e18d196a46bc0ca3357889`; post-commit target comparison is part of final verification. |
+| Source directories | 1 | `phases/` structure is mirrored. Its source tree SHA-1 and the committed target subtree SHA-1 both equal `5cdc77faf15d3f48f0e18d196a46bc0ca3357889`; this was checked after commit. |
 | Source exclusions | 0 | None. |
 
 The manifest records source path, source Git blob SHA-1, upstream size, target path, target Git blob SHA-1, exact-hash indicator, disposition, transformation, reason, root-level convenience copies, and runtime mapping. Source content remains recoverable at its original-relative location.
@@ -79,18 +81,18 @@ This is a source-level compatibility mapping, not a claim that a profile accepte
 
 - Source Git tree was read with `truncated=false`; expected source inventory counted as 19 blobs and one directory.
 - All 19 source files were fetched at the pinned upstream commit and the target blob IDs created for `source/original/` matched the source blob IDs.
-- Authored package metadata, target adapter, manifest, validator, smoke test, and workflow were prepared. These checks describe the committed validation process; tests are not counted as executed solely because their files exist.
+- The GitHub Actions workflow was executed on the implementation commit. Source/hash validation, metadata JSON checks, Node syntax checks, provider smoke tests, and npm package-content checks all passed; the link in the validation table is the run evidence.
 
 ### Checks still require actual execution
 
 | Check | Status | Evidence required |
 |---|---|---|
-| Post-commit completeness check of all 19 raw mirrors and `phases/` subtree SHA | Pending | Read target Git tree after conversion commit and compare every path/hash plus subtree SHA. |
-| Python manifest/hash validator | Not yet executed | Successful `python3 scripts/validate_source_manifest.py` output or CI result. |
-| Node syntax check | Not yet executed | Successful `node --check index.js`. |
-| Provider registration and source-body smoke test | Not yet executed | Successful `node tests/plugin-smoke.mjs`. |
-| npm tarball content check | Not yet executed | `npm pack --dry-run --json` plus the validator's pack-manifest check, including the `.gitignore` compatibility mirror. |
-| GitHub Actions workflow | Not yet verified | Actual Actions run and result for the resulting commit. |
+| Post-commit completeness check of all 19 raw mirrors and `phases/` subtree SHA | Passed | Recursive target tree contained all 19 source mirrors with exact blob IDs; the phase subtree SHA-1 matched upstream. |
+| Python manifest/hash validator | Passed in CI | [Run 40966107750](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/40966107750), implementation commit `08074d86dfd957cf759f410b91a4f92a9741b2b6`. |
+| Node syntax check | Passed in CI | `node --check index.js` and `node --check tests/plugin-smoke.mjs` completed successfully in [run 40966107750](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/40966107750). |
+| Provider registration and source-body smoke test | Passed in CI | Mock registration, 15 candidates, explicit invocation flags, and unchanged phase body suffix checks passed in [run 40966107750](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/40966107750). |
+| npm tarball content check | Passed in CI | `npm pack --dry-run --json` and the validator's required-file check, including the `.gitignore` compatibility mirror, passed in [run 40966107750](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/40966107750). |
+| GitHub Actions workflow | Passed for implementation commit | The full workflow completed successfully on [`08074d8`](https://github.com/mulqizamzam/mulqi-bagbigbug/commit/08074d86dfd957cf759f410b91a4f92a9741b2b6). This report/manifest refresh is documentation-only; a separate run is triggered for that new commit. |
 | Live Harness install, enablement, slash invocation, reload, and uninstall | Not performed | A running Harness `0.2.1-rc.2` profile with installation and runtime evidence. |
 | npm/custom registry publication | Not performed | Explicit release/publish operation and registry confirmation. |
 

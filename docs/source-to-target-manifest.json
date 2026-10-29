@@ -22,7 +22,16 @@
     },
     "total_file_bytes": 495963,
     "phase_prompt_count": 14,
-    "unique_phase_blob_sha1_count": 13
+    "unique_phase_blob_sha1_count": 13,
+    "post_commit_verification": {
+      "implementation_commit": "08074d86dfd957cf759f410b91a4f92a9741b2b6",
+      "target_recursive_tree_truncated": false,
+      "source_files_present_and_hash_matched": 19,
+      "source_files_expected": 19,
+      "source_phase_subtree_sha1": "5cdc77faf15d3f48f0e18d196a46bc0ca3357889",
+      "target_phase_subtree_sha1": "5cdc77faf15d3f48f0e18d196a46bc0ca3357889",
+      "result": "passed"
+    }
   },
   "directories": [
     {
@@ -31,7 +40,7 @@
       "target_path": "source/original/phases",
       "target_git_tree_sha": "5cdc77faf15d3f48f0e18d196a46bc0ca3357889",
       "disposition": "preserved_directory_structure",
-      "reason": "All 14 child files were mirrored as original blobs; target subtree identity must be checked after commit."
+      "reason": "Post-commit recursive tree verification confirmed source/original/phases has the same Git tree SHA-1 as the upstream phases directory."
     }
   ],
   "items": [
@@ -708,5 +717,23 @@
     "runtime_mapping": "Each of 14 source phase files maps to one user-invocable and non-model-invocable provider entry.",
     "harness_compatibility": "dsh.engines.dsh is pinned to 0.2.1-rc.2; mock provider tests do not substitute for a live Harness installation.",
     "package_coverage": "npm pack --dry-run --json checks every source original and required runtime/documentation file; upstream .gitignore uses a byte-identical alias only in the package archive."
+  },
+  "validation_results": {
+    "github_actions_run_id": 40966107750,
+    "github_actions_url": "https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/40966107750",
+    "tested_commit": "08074d86dfd957cf759f410b91a4f92a9741b2b6",
+    "result": "success",
+    "passed_steps": [
+      "source-to-target completeness and Git blob hashes",
+      "package and metadata JSON",
+      "JavaScript syntax",
+      "mock provider registration and phase loading",
+      "npm pack source/runtime package contents"
+    ],
+    "not_performed": [
+      "live Harness profile installation and invocation",
+      "registry publication",
+      "live target testing"
+    ]
   }
 }
