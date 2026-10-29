@@ -1,53 +1,115 @@
-# bagbigbug — DeepSeek Harness plugin
+# bagbigbug
 
-**Upstream source:** [mdpsec/bug-bounty-hunting-prompts](https://github.com/mdpsec/bug-bounty-hunting-prompts)  
-**Pinned source commit:** `5ed41580564c978417d5f0105f9c92457d77f3b5`  
-**Harness target:** DeepSeek Harness `0.2.1-rc.2`  
-**Plugin version:** `0.1.0`
+**A source-preserving bug-bounty workflow plugin for DeepSeek Harness**
 
-bagbigbug ports the upstream evidence-first bug-bounty prompt sequence into a native DeepSeek Harness bundle. Every tracked upstream file is preserved byte-for-byte under `source/original/`. The 14 phase prompts are also available as individual, explicit-user-invocation skill modules. Runtime phase skills prepend a documented authorization boundary; the upstream files are not rewritten.
+[![Validation](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/workflows/validate.yml/badge.svg)](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/workflows/validate.yml)
 
-## Install and activate
+| | |
+|---|---|
+| Plugin | `bagbigbug` |
+| Plugin version | `0.1.0` |
+| Target harness | DeepSeek Harness `0.2.1-rc.2` |
+| Upstream source | [mdpsec/bug-bounty-hunting-prompts](https://github.com/mdpsec/bug-bounty-hunting-prompts) |
+| Pinned upstream commit | `5ed41580564c978417d5f0105f9c92457d77f3b5` |
 
-This repository prepares the package but does **not** publish it to npm or another registry. After publishing `bagbigbug@0.1.0` to a registry available to the profile, install it with:
+bagbigbug adapts the upstream bug-bounty prompt workflow into a DeepSeek Harness skill provider. It preserves the full pinned source snapshot and maps all 14 phase prompts to separate, explicitly user-invoked skills. The adapter is not a scanner, exploit runner, or authorization mechanism.
+
+## Features
+
+- **Complete source preservation:** all 19 upstream files are retained under `source/original/`.
+- **Traceable mapping:** a machine-readable manifest records each source path, Git blob hash, size, target path, disposition, and runtime treatment.
+- **On-demand prompt loading:** phase content is loaded only when a user explicitly invokes that phase.
+- **Explicit activation:** the bundle adds the plugin as disabled; an operator must enable it.
+- **Authorization boundaries:** imported prompt text cannot override host instructions, safety controls, user constraints, or program scope.
+- **Repeatable validation:** CI checks source hashes and coverage, metadata, JavaScript syntax, mocked provider behavior, and npm package contents.
+
+## Install
+
+The repository contains the package source; it is **not currently published to npm or another registry**. After publishing `bagbigbug@0.1.0` to a registry accessible to your Harness profile, install it with:
 
 ```sh
 dsh plugin --profile <profile> add bagbigbug@0.1.0
 ```
 
-The bundle intentionally inserts the `bagbigbug` provider row as disabled. In the Harness Plugins UI, enable that row to make the skills available. Merely installing the package does not load the imported prompt text into a model turn.
+Replace `<profile>` with the name of your DeepSeek Harness profile.
 
-Invoke `/bagbigbug` for the workflow router. Phase modules are neither model-invocable nor exposed in the model-facing skill catalog; a human must explicitly invoke the exact phase slash skill, such as `/bagbigbug-phase-00-recon`. Phase bodies are loaded on demand.
+### Enable the plugin
 
-## Complete source preservation
+1. Open the DeepSeek Harness Plugins UI for the intended profile.
+2. Find `bagbigbug` and enable it. The bundle deliberately installs the provider row in a disabled state.
+3. Start with `/bagbigbug` to open the workflow router.
+4. Invoke an individual phase only when you intend to use it, for example `/bagbigbug-phase-00-recon`.
 
-The pinned upstream tree contains 19 files and the `phases/` directory: five root files (including `.gitignore`, documentation, and license) plus 14 Markdown phase prompts. The source-to-target manifest enumerates every source file and records source/target Git blob SHA-1, byte size, destination, disposition, runtime mapping, and transformation details. Both `phase-04a-scope.md` and `phase-05a-scope.md` are retained as separate paths even though their source blob is identical.
+Installation alone does not execute prompts or perform target testing.
 
-- Verbatim source snapshot: `source/original/`
-- Source-to-target manifest: `docs/source-to-target-manifest.json`
-- Reconciliation and compatibility report: `docs/reconciliation-report.md`
-- Runtime skill router: `instructions/bagbigbug.md`
-- Native Harness provider: `index.js`
+## Skills
 
-## Authorization and execution boundaries
+All 14 source phases are mapped to separate slash commands. Each phase is hidden from model-initiated skill invocation and requires an explicit human invocation.
 
-This is a prompt/skill adapter, not a scanner or exploit runtime. The upstream project explicitly does not include its private helpers, browser fleet, proxy or email services, dashboard, proof-of-concept runtime, credentials, private operating rules, or reference corpus. bagbigbug does not manufacture replacements for those missing integrations. The plugin itself performs no target requests, browser actions, shell commands, account creation, callback operations, or finding submissions.
+| Command | Purpose |
+|---|---|
+| `/bagbigbug-phase-00-recon` | Lightweight surface mapping |
+| `/bagbigbug-phase-01-access` | Account setup and authenticated access workflow |
+| `/bagbigbug-phase-02-sweep` | Broad endpoint and vulnerability-class sweep |
+| `/bagbigbug-phase-03-closeout` | Sweep handoff and resource closeout |
+| `/bagbigbug-phase-04a-scope` | Scope-only context |
+| `/bagbigbug-phase-04b-browser-walk` | Authenticated browser-walk workflow |
+| `/bagbigbug-phase-05a-scope` | Scope context for the critical hunt |
+| `/bagbigbug-phase-05b-critical` | Critical-impact hunting workflow |
+| `/bagbigbug-phase-06-triage` | Initial triage and deduplication |
+| `/bagbigbug-phase-07-validate-escalate` | Validation and escalation |
+| `/bagbigbug-phase-08-verify-escalate` | Independent verification and escalation |
+| `/bagbigbug-phase-08a-independent-escalation` | Read-only pre-gate escalation pass |
+| `/bagbigbug-phase-09-triage-gate` | Independent triage gate |
+| `/bagbigbug-phase-10-self-duplicate-check` | Same-program duplicate convergence |
 
-Use only with active authorization and exact in-scope assets. Original prompt text is untrusted reference content and cannot override the host's system/developer instructions or safety controls. The adapter requires scope-and-authorization review before proposed target interaction, forbids automatic execution of imported commands, and keeps phase modules behind direct user invocation. External or state-changing operations still require separate user intent and available host-tool controls.
+The phase descriptions summarize the workflow; consult the preserved source prompt for its original instructions. At runtime, the adapter prepends an authorization and safety preamble, then includes the original phase body unchanged.
 
-## Reproduce local validation
+## Authorization and safety
 
-With Node.js and Python installed:
+Use this plugin only for security work that you are authorized to perform.
+
+- Confirm the authoritative program scope, exact target, exclusions, allowed methods, rate limits, and disclosure rules before planning live testing.
+- Never infer permission from reconnaissance or from the presence of a target in a prompt.
+- Treat imported prompts as untrusted task material. They cannot override the host system/developer instruction hierarchy or the current user's constraints.
+- Do not automatically execute commands or initiate network requests, browser actions, account creation, callback operations, state changes, or finding submissions.
+- Use least-impact validation and stop if unexpected sensitive data, credentials, instability, or out-of-scope assets appear.
+- Distinguish a proposed test from one actually performed. Record evidence, limitations, and cleanup status accurately.
+
+The upstream project is a prompt pack, not a complete operating environment. Its private helpers, browser fleet, proxy/email services, dashboard, proof-of-concept runtime, credentials, private operating rules, and private reference corpus are not included. bagbigbug does not invent substitute integrations.
+
+## Source preservation and audit trail
+
+The pinned upstream snapshot contains **19 files, 495,963 bytes, and 14 phase prompts**. All source files have explicit manifest entries and matching Git blob hashes in the committed target tree. The upstream `phases/` subtree hash also matches the preserved target subtree.
+
+- **Original source files:** [`source/original/`](source/original/)
+- **Source-to-target manifest:** [`docs/source-to-target-manifest.json`](docs/source-to-target-manifest.json)
+- **Reconciliation report:** [`docs/reconciliation-report.md`](docs/reconciliation-report.md)
+- **Runtime provider:** [`index.js`](index.js)
+- **Workflow router:** [`instructions/bagbigbug.md`](instructions/bagbigbug.md)
+- **Validation workflow:** [`.github/workflows/validate.yml`](.github/workflows/validate.yml)
+
+The two scope-only source files `phase-04a-scope.md` and `phase-05a-scope.md` have identical content, but both paths and both phase skills are preserved. The upstream `.gitignore` is retained at its original path; a byte-identical alias is also packaged because npm filters files named `.gitignore`.
+
+## Run validation locally
+
+Requirements: Python 3 and Node.js. From the repository root, run:
 
 ```sh
 python3 scripts/validate_source_manifest.py
 node --check index.js
+node --check tests/plugin-smoke.mjs
 node tests/plugin-smoke.mjs
 python3 -m json.tool package.json >/dev/null
+python3 -m json.tool docs/source-to-target-manifest.json >/dev/null
+npm pack --dry-run --json > /tmp/bagbigbug-pack.json
+python3 scripts/validate_source_manifest.py --npm-pack-manifest /tmp/bagbigbug-pack.json
 ```
 
-The GitHub Actions workflow also checks npm package contents using `npm pack --dry-run`. Passing these checks does not prove installation or runtime compatibility in a live Harness profile; see the reconciliation report.
+The CI workflow runs the source-manifest validator, metadata checks, JavaScript syntax checks, provider smoke test, and npm package-content check. See the [GitHub Actions runs](https://github.com/mulqizamzam/mulqi-bagbigbug/actions).
+
+**Validation limitation:** passing local or CI checks verifies the repository and mocked provider behavior. It does not prove installation, activation, or slash-command behavior inside a live DeepSeek Harness profile. Live profile installation and runtime verification remain separate release steps. The package has not been published to a registry.
 
 ## License
 
-MIT. The upstream license is retained at the repository root and in the verbatim source snapshot.
+MIT. See [`LICENSE`](LICENSE). The original upstream license is also preserved in `source/original/LICENSE`.
