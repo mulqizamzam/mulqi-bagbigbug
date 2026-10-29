@@ -1,0 +1,26 @@
+# Local development and testing artifacts
+node_modules/
+.pnpm-store/
+coverage/
+dist/
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+cookies*
+credentials*
+secrets*
+tokens*
+sessions*
+raw/
+sensitive/
+reports/
+hunt/
+*.flow
+*.har
+*.pcap
+*.sqlite
+*.db

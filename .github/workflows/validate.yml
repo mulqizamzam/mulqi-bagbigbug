@@ -1,0 +1,39 @@
+name: Validate bagbigbug source fidelity and plugin surface
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Validate source-to-target completeness and hashes
+        run: python3 scripts/validate_source_manifest.py
+      - name: Check package and metadata JSON
+        run: |
+          python3 -m json.tool package.json >/dev/null
+          python3 -m json.tool locale/en.json >/dev/null
+          python3 -m json.tool docs/source-to-target-manifest.json >/dev/null
+      - name: Check JavaScript syntax
+        run: |
+          node --check index.js
+          node --check tests/plugin-smoke.mjs
+      - name: Smoke-test plugin registration and phase loading
+        run: node tests/plugin-smoke.mjs
+      - name: Inspect npm package contents
+        run: |
+          npm pack --dry-run --json > /tmp/bagbigbug-pack.json
+          python3 scripts/validate_source_manifest.py --npm-pack-manifest /tmp/bagbigbug-pack.json

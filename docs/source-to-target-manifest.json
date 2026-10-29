@@ -1,0 +1,712 @@
+{
+  "schema_version": 1,
+  "plugin": {
+    "name": "bagbigbug",
+    "version": "0.1.0",
+    "harness": "DeepSeek Harness",
+    "harness_version": "0.2.1-rc.2",
+    "source_repository": "https://github.com/mdpsec/bug-bounty-hunting-prompts",
+    "target_repository": "https://github.com/mulqizamzam/mulqi-bagbigbug"
+  },
+  "source_snapshot": {
+    "commit": "5ed41580564c978417d5f0105f9c92457d77f3b5",
+    "tree_sha": "802c7d82a957c7641dbe7585f755fd25e0fd3d4f",
+    "source_tree_truncated": false,
+    "file_count": 19,
+    "directory_count": 1,
+    "directory_paths": [
+      "phases"
+    ],
+    "directory_tree_shas": {
+      "phases": "5cdc77faf15d3f48f0e18d196a46bc0ca3357889"
+    },
+    "total_file_bytes": 495963,
+    "phase_prompt_count": 14,
+    "unique_phase_blob_sha1_count": 13
+  },
+  "directories": [
+    {
+      "source_path": "phases",
+      "source_git_tree_sha": "5cdc77faf15d3f48f0e18d196a46bc0ca3357889",
+      "target_path": "source/original/phases",
+      "target_git_tree_sha": "5cdc77faf15d3f48f0e18d196a46bc0ca3357889",
+      "disposition": "preserved_directory_structure",
+      "reason": "All 14 child files were mirrored as original blobs; target subtree identity must be checked after commit."
+    }
+  ],
+  "items": [
+    {
+      "source_path": ".gitignore",
+      "source_git_blob_sha1": "0a731aa6912ee9e814bde969e3af43d67e5ec6ab",
+      "source_size_bytes": 204,
+      "target_path": "source/original/.gitignore",
+      "target_git_blob_sha1": "0a731aa6912ee9e814bde969e3af43d67e5ec6ab",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference",
+      "reason": "Original ignore file retained at exact path; an additional same-content filename is included in npm artifacts because npm filters .gitignore files.",
+      "transformation": "none",
+      "exclusion_reason": null,
+      "additional_target_paths": [
+        "source/original-dotgitignore.txt"
+      ],
+      "runtime_module": null
+    },
+    {
+      "source_path": "ADAPTATION.md",
+      "source_git_blob_sha1": "d6cd9ed9ea18d3e4596af2f6259e07e5e8560653",
+      "source_size_bytes": 8811,
+      "target_path": "source/original/ADAPTATION.md",
+      "target_git_blob_sha1": "d6cd9ed9ea18d3e4596af2f6259e07e5e8560653",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference",
+      "reason": "Original upstream file retained as reference; not loaded into runtime.",
+      "transformation": "none",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": null
+    },
+    {
+      "source_path": "LICENSE",
+      "source_git_blob_sha1": "0b754d390f73997dc63d819ea0525a28513ba44c",
+      "source_size_bytes": 1096,
+      "target_path": "source/original/LICENSE",
+      "target_git_blob_sha1": "0b754d390f73997dc63d819ea0525a28513ba44c",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_license",
+      "reason": "Required license text retained and copied to repository root.",
+      "transformation": "none",
+      "exclusion_reason": null,
+      "additional_target_paths": [
+        "LICENSE"
+      ],
+      "runtime_module": null
+    },
+    {
+      "source_path": "phases/phase-00-recon.md",
+      "source_git_blob_sha1": "ae8f5baae52a5cbd8a270a99abd768153962c4f8",
+      "source_size_bytes": 17886,
+      "target_path": "source/original/phases/phase-00-recon.md",
+      "target_git_blob_sha1": "ae8f5baae52a5cbd8a270a99abd768153962c4f8",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-00-recon",
+        "purpose": "Lightweight surface map",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-01-access.md",
+      "source_git_blob_sha1": "7bc0f321e4a98a4b5ce0901b754c2a379e0cfe06",
+      "source_size_bytes": 92564,
+      "target_path": "source/original/phases/phase-01-access.md",
+      "target_git_blob_sha1": "7bc0f321e4a98a4b5ce0901b754c2a379e0cfe06",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-01-access",
+        "purpose": "Account setup and authenticated access",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-02-sweep.md",
+      "source_git_blob_sha1": "3b6d5a55e6eba4bdf4a80bb8a6172964b9318589",
+      "source_size_bytes": 82853,
+      "target_path": "source/original/phases/phase-02-sweep.md",
+      "target_git_blob_sha1": "3b6d5a55e6eba4bdf4a80bb8a6172964b9318589",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-02-sweep",
+        "purpose": "Broad endpoint and vulnerability-class sweep",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-03-closeout.md",
+      "source_git_blob_sha1": "0526577d720c7cb5ba326baa78d5d8f5887885d9",
+      "source_size_bytes": 38902,
+      "target_path": "source/original/phases/phase-03-closeout.md",
+      "target_git_blob_sha1": "0526577d720c7cb5ba326baa78d5d8f5887885d9",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-03-closeout",
+        "purpose": "Validate the sweep handoff and release resources",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-04a-scope.md",
+      "source_git_blob_sha1": "0ca5b35a191bf858cacd6acb2261ed44b917e85c",
+      "source_size_bytes": 1220,
+      "target_path": "source/original/phases/phase-04a-scope.md",
+      "target_git_blob_sha1": "0ca5b35a191bf858cacd6acb2261ed44b917e85c",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-04a-scope",
+        "purpose": "Scope-only context",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-04b-browser-walk.md",
+      "source_git_blob_sha1": "37a165a4a38ed7289cf2f7b6ddb76682da3b180b",
+      "source_size_bytes": 7352,
+      "target_path": "source/original/phases/phase-04b-browser-walk.md",
+      "target_git_blob_sha1": "37a165a4a38ed7289cf2f7b6ddb76682da3b180b",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-04b-browser-walk",
+        "purpose": "Authenticated browser walk",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-05a-scope.md",
+      "source_git_blob_sha1": "0ca5b35a191bf858cacd6acb2261ed44b917e85c",
+      "source_size_bytes": 1220,
+      "target_path": "source/original/phases/phase-05a-scope.md",
+      "target_git_blob_sha1": "0ca5b35a191bf858cacd6acb2261ed44b917e85c",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-05a-scope",
+        "purpose": "Scope-only context for the critical hunt",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-05b-critical.md",
+      "source_git_blob_sha1": "bedaffe8e327d43cf414cd686e687004d0332921",
+      "source_size_bytes": 14281,
+      "target_path": "source/original/phases/phase-05b-critical.md",
+      "target_git_blob_sha1": "bedaffe8e327d43cf414cd686e687004d0332921",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-05b-critical",
+        "purpose": "Critical-impact hunting",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-06-triage.md",
+      "source_git_blob_sha1": "8e44e292b08315b343e11edfdc032e328ea6a4b6",
+      "source_size_bytes": 27590,
+      "target_path": "source/original/phases/phase-06-triage.md",
+      "target_git_blob_sha1": "8e44e292b08315b343e11edfdc032e328ea6a4b6",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-06-triage",
+        "purpose": "Initial triage and deduplication",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-07-validate-escalate.md",
+      "source_git_blob_sha1": "6e80a68810d8c16793c758f1a62098cdc8f9647b",
+      "source_size_bytes": 62590,
+      "target_path": "source/original/phases/phase-07-validate-escalate.md",
+      "target_git_blob_sha1": "6e80a68810d8c16793c758f1a62098cdc8f9647b",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-07-validate-escalate",
+        "purpose": "Validate and escalate findings",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-08-verify-escalate.md",
+      "source_git_blob_sha1": "b8a8cbc481d2b15ef7c572b117763ca8dc334e26",
+      "source_size_bytes": 33642,
+      "target_path": "source/original/phases/phase-08-verify-escalate.md",
+      "target_git_blob_sha1": "b8a8cbc481d2b15ef7c572b117763ca8dc334e26",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-08-verify-escalate",
+        "purpose": "Independent verification and escalation",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-08a-independent-escalation.md",
+      "source_git_blob_sha1": "4c7e9cd20889d6894750b1fafdc94768bf9db1cc",
+      "source_size_bytes": 8646,
+      "target_path": "source/original/phases/phase-08a-independent-escalation.md",
+      "target_git_blob_sha1": "4c7e9cd20889d6894750b1fafdc94768bf9db1cc",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-08a-independent-escalation",
+        "purpose": "One read-only pre-gate escalation pass",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-09-triage-gate.md",
+      "source_git_blob_sha1": "9860798079465e92696fbe765476d37ef4703839",
+      "source_size_bytes": 84724,
+      "target_path": "source/original/phases/phase-09-triage-gate.md",
+      "target_git_blob_sha1": "9860798079465e92696fbe765476d37ef4703839",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-09-triage-gate",
+        "purpose": "Independent live triage gate",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "phases/phase-10-self-duplicate-check.md",
+      "source_git_blob_sha1": "db9a3c57bdeb4d30dc625a3746d862268b4d1448",
+      "source_size_bytes": 6827,
+      "target_path": "source/original/phases/phase-10-self-duplicate-check.md",
+      "target_git_blob_sha1": "db9a3c57bdeb4d30dc625a3746d862268b4d1448",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference_and_runtime_source",
+      "reason": "Original prompt is retained byte-for-byte. Its separately authored runtime skill is user-invoked only, prepends an authorization/safety preamble, then includes the source body unchanged.",
+      "transformation": "No edit to source/original. Runtime-only preamble is prepended by index.js.",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": {
+        "skill_name": "bagbigbug-phase-10-self-duplicate-check",
+        "purpose": "Same-program duplicate convergence",
+        "model_invocable": false,
+        "user_invocable": true,
+        "activation": "Explicit user slash invocation only; hidden from model-facing catalog",
+        "target_implementation": "index.js bundled skill provider; prompt body loaded from source/original at invocation",
+        "modifications": "Safety/authorization preamble prepended to runtime body only; upstream source is the exact unchanged suffix.",
+        "reason_for_non_execution": "Imported command/integration text is reference instruction, not executable automation. The package does not make target requests, launch browsers, execute shell commands, mutate target state, or submit reports."
+      }
+    },
+    {
+      "source_path": "README.md",
+      "source_git_blob_sha1": "7a5d2c856c5b36b920ed29adcaccbf543c5f68bb",
+      "source_size_bytes": 4657,
+      "target_path": "source/original/README.md",
+      "target_git_blob_sha1": "7a5d2c856c5b36b920ed29adcaccbf543c5f68bb",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_reference",
+      "reason": "Original upstream file retained as reference; not loaded into runtime.",
+      "transformation": "none",
+      "exclusion_reason": null,
+      "additional_target_paths": [],
+      "runtime_module": null
+    },
+    {
+      "source_path": "SECURITY.md",
+      "source_git_blob_sha1": "f09819b4071e604f9a66e44741a061b39ebe4348",
+      "source_size_bytes": 898,
+      "target_path": "source/original/SECURITY.md",
+      "target_git_blob_sha1": "f09819b4071e604f9a66e44741a061b39ebe4348",
+      "target_blob_matches_source_sha1": true,
+      "raw_disposition": "preserved_verbatim_security_policy",
+      "reason": "Upstream security policy retained and copied to repository root.",
+      "transformation": "none",
+      "exclusion_reason": null,
+      "additional_target_paths": [
+        "SECURITY.md"
+      ],
+      "runtime_module": null
+    }
+  ],
+  "phase_modules": [
+    {
+      "skill_name": "bagbigbug-phase-00-recon",
+      "source_path": "phases/phase-00-recon.md",
+      "source_git_blob_sha1": "ae8f5baae52a5cbd8a270a99abd768153962c4f8",
+      "purpose": "Lightweight surface map",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-01-access",
+      "source_path": "phases/phase-01-access.md",
+      "source_git_blob_sha1": "7bc0f321e4a98a4b5ce0901b754c2a379e0cfe06",
+      "purpose": "Account setup and authenticated access",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-02-sweep",
+      "source_path": "phases/phase-02-sweep.md",
+      "source_git_blob_sha1": "3b6d5a55e6eba4bdf4a80bb8a6172964b9318589",
+      "purpose": "Broad endpoint and vulnerability-class sweep",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-03-closeout",
+      "source_path": "phases/phase-03-closeout.md",
+      "source_git_blob_sha1": "0526577d720c7cb5ba326baa78d5d8f5887885d9",
+      "purpose": "Validate the sweep handoff and release resources",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-04a-scope",
+      "source_path": "phases/phase-04a-scope.md",
+      "source_git_blob_sha1": "0ca5b35a191bf858cacd6acb2261ed44b917e85c",
+      "purpose": "Scope-only context",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-04b-browser-walk",
+      "source_path": "phases/phase-04b-browser-walk.md",
+      "source_git_blob_sha1": "37a165a4a38ed7289cf2f7b6ddb76682da3b180b",
+      "purpose": "Authenticated browser walk",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-05a-scope",
+      "source_path": "phases/phase-05a-scope.md",
+      "source_git_blob_sha1": "0ca5b35a191bf858cacd6acb2261ed44b917e85c",
+      "purpose": "Scope-only context for the critical hunt",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-05b-critical",
+      "source_path": "phases/phase-05b-critical.md",
+      "source_git_blob_sha1": "bedaffe8e327d43cf414cd686e687004d0332921",
+      "purpose": "Critical-impact hunting",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-06-triage",
+      "source_path": "phases/phase-06-triage.md",
+      "source_git_blob_sha1": "8e44e292b08315b343e11edfdc032e328ea6a4b6",
+      "purpose": "Initial triage and deduplication",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-07-validate-escalate",
+      "source_path": "phases/phase-07-validate-escalate.md",
+      "source_git_blob_sha1": "6e80a68810d8c16793c758f1a62098cdc8f9647b",
+      "purpose": "Validate and escalate findings",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-08-verify-escalate",
+      "source_path": "phases/phase-08-verify-escalate.md",
+      "source_git_blob_sha1": "b8a8cbc481d2b15ef7c572b117763ca8dc334e26",
+      "purpose": "Independent verification and escalation",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-08a-independent-escalation",
+      "source_path": "phases/phase-08a-independent-escalation.md",
+      "source_git_blob_sha1": "4c7e9cd20889d6894750b1fafdc94768bf9db1cc",
+      "purpose": "One read-only pre-gate escalation pass",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-09-triage-gate",
+      "source_path": "phases/phase-09-triage-gate.md",
+      "source_git_blob_sha1": "9860798079465e92696fbe765476d37ef4703839",
+      "purpose": "Independent live triage gate",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    },
+    {
+      "skill_name": "bagbigbug-phase-10-self-duplicate-check",
+      "source_path": "phases/phase-10-self-duplicate-check.md",
+      "source_git_blob_sha1": "db9a3c57bdeb4d30dc625a3746d862268b4d1448",
+      "purpose": "Same-program duplicate convergence",
+      "model_invocable": false,
+      "user_invocable": true,
+      "activation": "explicit user slash invocation only",
+      "runtime_target": "index.js provider reads the source/original file on invocation",
+      "transformation": "prepend adapter-authored authorization/safety preamble; append source body unchanged",
+      "automatic_execution": false
+    }
+  ],
+  "npm_compatibility_mirrors": {
+    ".gitignore": {
+      "path": "source/original-dotgitignore.txt",
+      "source_blob_sha1": "0a731aa6912ee9e814bde969e3af43d67e5ec6ab",
+      "source_size_bytes": 204,
+      "reason": "npm pack filters files named .gitignore; a same-byte content alias ensures the original material remains available in the published package while the exact original path remains preserved in source control."
+    }
+  },
+  "authored_adaptations": [
+    {
+      "path": "index.js",
+      "status": "newly authored",
+      "purpose": "DeepSeek Harness Cordis skill provider; source-backed on-demand phase loading",
+      "runtime": "executable only after bundle is enabled"
+    },
+    {
+      "path": "instructions/bagbigbug.md",
+      "status": "newly authored",
+      "purpose": "workflow router and explicit authorization gate",
+      "runtime": "user-invocable only"
+    },
+    {
+      "path": "package.json",
+      "status": "newly authored",
+      "purpose": "npm metadata, exact DSH version compatibility, and package contents"
+    },
+    {
+      "path": "cordis.patch.yml",
+      "status": "newly authored",
+      "purpose": "native installable bundle patch; provider row disabled by default"
+    },
+    {
+      "path": "icon.svg",
+      "status": "newly authored",
+      "purpose": "original plugin display icon"
+    },
+    {
+      "path": "locale/en.json",
+      "status": "newly authored",
+      "purpose": "Harness plugin display metadata"
+    },
+    {
+      "path": "scripts/validate_source_manifest.py",
+      "status": "newly authored",
+      "purpose": "source coverage, Git blob hash, byte-length, invocation-mapping, metadata, and npm package-inventory validator"
+    },
+    {
+      "path": "tests/plugin-smoke.mjs",
+      "status": "newly authored",
+      "purpose": "mock registration and runtime phase-content preservation test"
+    },
+    {
+      "path": ".github/workflows/validate.yml",
+      "status": "newly authored",
+      "purpose": "CI for fidelity, syntax, mock registration, and npm package-content checks"
+    },
+    {
+      "path": ".gitignore",
+      "status": "newly authored",
+      "purpose": "excludes local dependencies, secrets, and research artifacts"
+    },
+    {
+      "path": "README.md",
+      "status": "newly authored",
+      "purpose": "install, activation, usage, source, and validation guide"
+    },
+    {
+      "path": "LICENSE",
+      "status": "verbatim mirror",
+      "purpose": "root convenience copy of the upstream MIT license"
+    },
+    {
+      "path": "SECURITY.md",
+      "status": "verbatim mirror",
+      "purpose": "root convenience copy of upstream security policy"
+    },
+    {
+      "path": "docs/source-to-target-manifest.json",
+      "status": "newly authored",
+      "purpose": "exhaustive per-source-item manifest"
+    },
+    {
+      "path": "docs/reconciliation-report.md",
+      "status": "newly authored",
+      "purpose": "source reconciliation, transformation, and validation report"
+    }
+  ],
+  "duplicate_content": [
+    {
+      "source_git_blob_sha1": "0ca5b35a191bf858cacd6acb2261ed44b917e85c",
+      "source_paths": [
+        "phases/phase-04a-scope.md",
+        "phases/phase-05a-scope.md"
+      ],
+      "treatment": "Both paths and separate user-invocable skill modules are retained; duplicate bytes are not treated as an omission."
+    }
+  ],
+  "exclusions": [],
+  "validation_contract": {
+    "source_coverage": "Manifest items and source/original file set must exactly match.",
+    "content_identity": "Every mirrored file must match the source Git blob SHA-1 calculated over Git's blob header and bytes, plus source byte size.",
+    "runtime_mapping": "Each of 14 source phase files maps to one user-invocable and non-model-invocable provider entry.",
+    "harness_compatibility": "dsh.engines.dsh is pinned to 0.2.1-rc.2; mock provider tests do not substitute for a live Harness installation.",
+    "package_coverage": "npm pack --dry-run --json checks every source original and required runtime/documentation file; upstream .gitignore uses a byte-identical alias only in the package archive."
+  }
+}

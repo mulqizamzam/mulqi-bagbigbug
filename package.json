@@ -1,0 +1,46 @@
+{
+  "name": "bagbigbug",
+  "version": "0.1.0",
+  "description": "Opt-in, evidence-first bug-bounty workflow skills for DeepSeek Harness; upstream phase prompts are retained verbatim and loaded only by explicit user invocation.",
+  "license": "MIT",
+  "author": "mulqizamzam",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mulqizamzam/mulqi-bagbigbug.git"
+  },
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "icon": "./icon.svg",
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "icon.svg",
+    "locale/",
+    "instructions/",
+    "source/original/",
+    "source/original-dotgitignore.txt",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "docs/source-to-target-manifest.json",
+    "docs/reconciliation-report.md"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "0.2.1-rc.2",
+    "@deepseek-ai/dsh-skill": "0.2.1-rc.2",
+    "@deepseek-ai/dsh-tool-skill": "0.2.1-rc.2"
+  },
+  "dsh": {
+    "engines": {
+      "dsh": "0.2.1-rc.2"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

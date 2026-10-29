@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">BagBigBug</title>
+  <desc id="desc">A shield enclosing a stylized bug, representing scoped security research.</desc>
+  <rect width="128" height="128" rx="24" fill="#101827"/>
+  <path d="M64 12 101 26v30c0 27-15 46-37 59C42 102 27 83 27 56V26Z" fill="#172d46" stroke="#66d9c7" stroke-width="4" stroke-linejoin="round"/>
+  <g stroke="#d7f8f1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M64 38v49"/>
+    <path d="M48 48 39 41M80 48l9-7M45 63H34M83 63h11M49 78l-9 9M79 78l9 9"/>
+    <path d="M54 32 48 24M74 32l6-8"/>
+  </g>
+  <ellipse cx="64" cy="47" rx="13" ry="10" fill="#fb7185" stroke="#d7f8f1" stroke-width="3"/>
+  <path d="M48 61c0-9 7-15 16-15s16 6 16 15v12c0 12-7 18-16 18s-16-6-16-18Z" fill="#f97362" stroke="#d7f8f1" stroke-width="3"/>
+  <path d="M64 55v30" stroke="#101827" stroke-width="3" stroke-linecap="round"/>
+</svg>

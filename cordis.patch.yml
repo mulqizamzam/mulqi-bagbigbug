@@ -1,0 +1,5 @@
+# Bundle installation adds the provider row disabled. A human must enable it explicitly.
+- insert:
+    - id: bagbigbug
+      name: bagbigbug
+      disabled: true
