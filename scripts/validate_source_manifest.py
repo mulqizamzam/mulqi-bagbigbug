@@ -17,7 +17,7 @@ def fail(message: str) -> None:
     raise SystemExit(1)
 
 def git_blob_sha1(data: bytes) -> str:
-    return hashlib.sha1(b'blob ' + str(len(data)).encode('ascii') + b'\\0' + data).hexdigest()
+    return hashlib.sha1(b'blob ' + str(len(data)).encode('ascii') + b'\0' + data).hexdigest()
 
 def safe_relative_path(value: str) -> bool:
     path = PurePosixPath(value)
