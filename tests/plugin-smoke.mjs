@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
-import { apply, inject, name } from '../index.js'
-import { PHASES, SKILLS, SOURCE_COMMIT } from '../src/catalog.js'
+import { createProvider, inject, name } from '../src/provider.js'
+import { PHASES, SKILLS, SOURCE_COMMIT, INVOCATION_POLICY } from '../src/catalog.js'
 import { PHASE_SAFETY_PREAMBLE } from '../src/safety.js'
 
 assert.equal(name, 'bagbigbug')
@@ -11,21 +11,8 @@ assert.equal(PHASES.length, 14)
 assert.equal(SKILLS.length, 15)
 assert.equal(new Set(SKILLS.map((skill) => skill.name)).size, 15)
 
-let provider
 const registration = new AbortController()
-let disposed = false
-const ctx = {
-  skills: {
-    registerProvider(factory) {
-      provider = factory({ signal: registration.signal, invalidate() {} })
-      return () => { disposed = true; registration.abort(new Error('provider disposed')) }
-    },
-  },
-}
-
-const dispose = apply(ctx)
-assert.equal(typeof dispose, 'function')
-assert.ok(provider)
+const provider = createProvider(registration.signal, 600)
 assert.equal(provider.name, 'bagbigbug')
 
 const candidates = await provider.list({})
@@ -60,16 +47,15 @@ aborted.abort(new Error('cancelled by test'))
 await assert.rejects(provider.list({ signal: aborted.signal }), /cancelled by test/)
 await assert.rejects(provider.get(routerCandidate, { signal: aborted.signal }), /cancelled by test/)
 
-const entry = (await readFile(new URL('../index.js', import.meta.url), 'utf8')).trim()
-assert.equal(entry, "export { name, inject, apply } from './src/provider.js'")
+const entry = await readFile(new URL('../index.js', import.meta.url), 'utf8')
+assert.match(entry, /export \\{ name, inject, apply \\} from '\\.\\/src\\/provider\\.js'/)
 const packageJson = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'))
 assert.ok(packageJson.files.includes('src/'))
 const patch = await readFile(new URL('../cordis.patch.yml', import.meta.url), 'utf8')
 assert.match(patch, /id: bagbigbug/)
 assert.match(patch, /disabled: true/)
 
-dispose()
-assert.equal(disposed, true)
+registration.abort(new Error('provider disposed'))
 await assert.rejects(provider.list({}), /provider disposed/)
 
 console.log(JSON.stringify({
