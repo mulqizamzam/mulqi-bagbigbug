@@ -84,7 +84,7 @@ def main() -> int:
     entry = (ROOT / 'index.js').read_text(encoding='utf-8').strip()
     if "export { name, inject, apply } from './src/provider.js'" not in entry: fail('index.js is not the thin provider entrypoint')
     provider = (ROOT / 'src/provider.js').read_text(encoding='utf-8')
-    for token in ('BUNDLED_SKILL_RANK', 'ctx.skills.registerProvider', 'PHASE_SAFETY_PREAMBLE'):
+    for token in ('BUNDLED_SKILL_RANK', 'ctx.skills.registerProvider', 'PHASE_SAFETY_PREAMBLE', 'createProvider(control.signal, BUNDLED_SKILL_RANK)'):
         if token not in provider: fail('provider is missing required contract: ' + token)
     catalog = (ROOT / 'src/catalog.js').read_text(encoding='utf-8')
     if 'sourceGitBlobSha1' not in catalog or 'phase-10-self-duplicate-check' not in catalog: fail('catalog lacks phase provenance/coverage')
