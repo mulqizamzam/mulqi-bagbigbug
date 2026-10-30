@@ -15,9 +15,9 @@
 | Source snapshot prior to refactor | PASS | Target `source/original/` tree SHA `802c7d82a957c7641dbe7585f755fd25e0fd3d4f`; phases subtree SHA `5cdc77faf15d3f48f0e18d196a46bc0ca3357889`. |
 | Harness contract review | PASS (static source inspection) | Exact tagged provider registry, consumer loader, plugin-development reference, and badge bundle inspected. |
 | Historical CI on pre-refactor implementation | PASS | Run 40966230251 tested the previous state; this is not evidence for the new modular refactor. |
-| Refactored source/hash validator | PENDING | Must pass CI on this refactor commit. |
-| Refactored provider smoke test | PENDING | Must pass CI on this refactor commit. |
-| npm package file inventory | PENDING | Must pass CI on this refactor commit. |
+| Refactored source/hash validator | PASS | Run [41020319530](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/41020319530): validated all 19 source mirrors and 14 phase mappings. |
+| Refactored provider smoke test | PASS | Run [41020319530](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/41020319530): 15 provider skills, all 14 original prompt bodies checked as unchanged suffixes, invocation and abort behavior checked. |
+| npm package file inventory | PASS | Run [41020319530](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/41020319530): npm pack archive included every declared source/runtime/evidence path. |
 | Live Harness install, activation, slash invocation, reload | NOT PERFORMED | No live Harness profile was available in this task. |
 | Registry publication | NOT PERFORMED | No publishing action requested or performed. |
 
