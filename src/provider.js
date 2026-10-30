@@ -22,7 +22,7 @@ function throwIfUnavailable(signal, registrationSignal) {
   registrationSignal?.throwIfAborted()
 }
 
-function toCandidate(skill) {
+function toCandidate(skill, bundledSkillRank) {
   return {
     name: skill.name,
     description: skill.description,
@@ -41,7 +41,7 @@ export function createProvider(registrationSignal, bundledSkillRank) {
     name: PROVIDER_NAME,
     async list(options = {}) {
       throwIfUnavailable(options.signal, registrationSignal)
-      return SKILLS.map(toCandidate)
+      return SKILLS.map((skill) => toCandidate(skill, bundledSkillRank))
     },
     async get(candidate, options = {}) {
       throwIfUnavailable(options.signal, registrationSignal)
