@@ -1,5 +1,6 @@
 /** DeepSeek Harness skill-provider adapter; all prompt bodies remain source-backed. */
 import { readFile } from 'node:fs/promises'
+import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import { INVOCATION_POLICY, PROVIDER_NAME, SKILLS } from './catalog.js'
 import { PHASE_SAFETY_PREAMBLE } from './safety.js'
@@ -67,10 +68,47 @@ export function createProvider(registrationSignal, bundledSkillRank) {
   })
 }
 
-/** Register the provider and return Cordis' registration disposer. */
+const requireFromHere = createRequire(import.meta.url)
+
+/**
+ * Read the bundled skill rank synchronously from the host Harness.
+ *
+ * The rank has to be known at registration time, and it must come from the
+ * running Harness rather than a duplicated constant, so it is resolved through
+ * a synchronous `require` of the peer dependency.
+ */
+function resolveBundledSkillRank() {
+  let mod
+  try {
+    mod = requireFromHere('@deepseek-ai/dsh-skill')
+  } catch (error) {
+    throw new Error(
+      'bagbigbug: cannot resolve the Harness peer dependency @deepseek-ai/dsh-skill, '
+      + 'so the bundled skill rank is unavailable. Install the plugin into a DeepSeek Harness '
+      + `profile instead of running it standalone. Cause: ${error?.message ?? error}`,
+    )
+  }
+  const rank = mod?.BUNDLED_SKILL_RANK
+  if (typeof rank !== 'number' || !Number.isFinite(rank)) {
+    throw new Error('bagbigbug: @deepseek-ai/dsh-skill does not export a numeric BUNDLED_SKILL_RANK')
+  }
+  return rank
+}
+
+/**
+ * Register the provider on a Harness skills registry.
+ *
+ * `SkillRegistry.registerProvider()` invokes the factory SYNCHRONOUSLY and
+ * reads `provider.name` off the returned object, so the factory must never be
+ * async: an async factory yields a Promise, the registry cannot read a name
+ * from it, and the provider is silently skipped. Keeping the rank an argument
+ * makes that contract testable without a Harness installation.
+ */
+export function registerProviderOn(ctx, bundledSkillRank) {
+  return ctx.skills.registerProvider((control) => createProvider(control.signal, bundledSkillRank))
+}
+
+/** Cordis plugin entry: resolve the host's bundled rank, then register. */
 export function apply(ctx) {
-  return ctx.skills.registerProvider(async (control) => {
-    const { BUNDLED_SKILL_RANK } = await import('@deepseek-ai/dsh-skill')
-    return createProvider(control.signal, BUNDLED_SKILL_RANK)
-  })
+  return registerProviderOn(ctx, resolveBundledSkillRank())
 }

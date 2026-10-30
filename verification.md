@@ -18,7 +18,10 @@
 | Refactored source/hash validator | PASS | Run [41020319530](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/41020319530): validated all 19 source mirrors and 14 phase mappings. |
 | Refactored provider smoke test | PASS | Run [41020319530](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/41020319530): 15 provider skills, all 14 original prompt bodies checked as unchanged suffixes, invocation and abort behavior checked. |
 | npm package file inventory | PASS | Run [41020319530](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/41020319530): npm pack archive included every declared source/runtime/evidence path. |
-| Live Harness install, activation, slash invocation, reload | NOT PERFORMED | No live Harness profile was available in this task. |
+| Real Harness `SkillRegistry` mount + real provider `apply` | PASS | `node scripts/live-harness-verify.mjs`: `discovered: 15/15  router=1 phases=14`; every phase body ends with the byte-exact upstream prompt (`suffix=true`); every skill `model=false user=true`. Mounts the real `@deepseek-ai/dsh-skill` registry from the Harness checkout, not a mock. |
+| Real `dsh` CLI profile composition with the bundle patch | PASS | `DSH_HOME=<writable> dsh --profile probe --from-default-profile headless --dump-config` exited 0 (382 composed lines); after declaring `bagbigbug` as a profile bundle, the composed tree contains `# == bagbigbug` / `- id: bagbigbug` / `name: bagbigbug` / `disabled: true`. |
+| `dsh plugin --profile … add` via pnpm | NOT PERFORMED (blocked) | pnpm must write its content-addressable store under `~/.local/share/pnpm/store`, outside the writable workspace; it fails `EROFS`. The profile was wired with the equivalent `dependencies` entry plus a `node_modules` symlink. |
+| Full boot + enabled plugin + slash invocation in a live GUI session | NOT PERFORMED | Would require enabling the row in a GUI profile and an LLM-backed session. The row ships `disabled: true` by design. |
 | Registry publication | NOT PERFORMED | No publishing action requested or performed. |
 
 ## CI commands required
@@ -33,4 +36,8 @@
 - `npm pack --dry-run --json > /tmp/bagbigbug-pack.json`
 - `python3 scripts/validate_source_manifest.py --npm-pack-manifest /tmp/bagbigbug-pack.json`
 
-Mock registration is not an end-to-end Cordis runtime. No claim of live plugin load is made.
+Optional, non-CI live check (needs a resolvable Harness peer dependency):
+
+- `node scripts/live-harness-verify.mjs`
+
+`tests/plugin-smoke.mjs` uses a mock registry and is not end-to-end Cordis. `scripts/live-harness-verify.mjs` mounts the real `@deepseek-ai/dsh-skill` registry with the package's own `apply`, which is the live registry-contract evidence recorded above; it does not boot a GUI profile.

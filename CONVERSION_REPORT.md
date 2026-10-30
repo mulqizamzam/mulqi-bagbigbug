@@ -34,7 +34,7 @@ python3 scripts/validate_source_manifest.py --npm-pack-manifest /tmp/bagbigbug-p
 
 ## Known Gaps
 
-1. Live Harness installation, activation, slash invocation, and reload were not performed in this session; CI and mocked tests do not replace a live profile test.
+1. Live evidence exists for the two contract boundaries that actually broke or could break silently: (a) the provider is registered on the real `@deepseek-ai/dsh-skill` `SkillRegistry` and all 15 skills load with byte-exact upstream suffixes; (b) the real `dsh` CLI composes a profile that includes this bundle and inserts the `bagbigbug` row (`disabled: true`). A full GUI profile boot with the row enabled, slash invocation, and reload was **not** performed; `dsh plugin add` itself is blocked here because pnpm's store lives outside the writable workspace (`EROFS`).
 2. Upstream contains prompt descriptions/placeholders but no implementation or API contracts for its private helper/browser/proxy/mailbox/SMS/MFA/OOB/PoC/report/dashboard/RAG services. They are not surfaced as executable tools.
 3. Registry publication was not performed.
 4. The requested `dsh-better-deepseek` reference was not located inside the exact official Harness tag; a first-party bundle in that tag provided verified patterns instead.

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
-import { createProvider, inject, name } from '../src/provider.js'
+import { createProvider, inject, name, registerProviderOn } from '../src/provider.js'
 import { PHASES, SKILLS, SOURCE_COMMIT, INVOCATION_POLICY } from '../src/catalog.js'
 import { PHASE_SAFETY_PREAMBLE } from '../src/safety.js'
 
@@ -49,6 +49,27 @@ await assert.rejects(provider.get(routerCandidate, { signal: aborted.signal }), 
 
 const entry = await readFile(new URL('../index.js', import.meta.url), 'utf8')
 assert.ok(entry.includes("export { name, inject, apply } from './src/provider.js'"))
+
+// Regression guard: SkillRegistry.registerProvider() calls the factory
+// synchronously and reads provider.name off its return value. An async factory
+// returns a Promise, the registry cannot read a name, and the provider is
+// silently skipped -- the plugin then exposes zero skills with no error.
+let captured
+const fakeContext = {
+  skills: {
+    registerProvider(factory) {
+      captured = factory({ signal: new AbortController().signal, invalidate() {} })
+      return () => {}
+    },
+  },
+}
+registerProviderOn(fakeContext, 600)
+assert.ok(captured, 'registerProvider factory was never invoked')
+assert.equal(typeof captured.then, 'undefined', 'registerProvider factory must not return a thenable')
+assert.equal(captured.name, 'bagbigbug')
+const syncCandidates = await captured.list({})
+assert.equal(syncCandidates.length, 15)
+assert.ok(syncCandidates.every((candidate) => candidate.rank === 600))
 const packageJson = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'))
 assert.ok(packageJson.files.includes('src/'))
 const patch = await readFile(new URL('../cordis.patch.yml', import.meta.url), 'utf8')

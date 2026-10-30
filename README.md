@@ -64,7 +64,13 @@ npm pack --dry-run --json > /tmp/bagbigbug-pack.json
 python3 scripts/validate_source_manifest.py --npm-pack-manifest /tmp/bagbigbug-pack.json
 ```
 
-A mocked provider smoke test is not equivalent to a live Harness profile test. Live installation and activation remain separate verification steps.
+`node tests/plugin-smoke.mjs` runs against a mock registry. For real-Harness evidence, run:
+
+```sh
+node scripts/live-harness-verify.mjs        # mounts the real @deepseek-ai/dsh-skill registry
+```
+
+It resolves `@deepseek-ai/dsh-skill` from the surrounding Harness installation, or from a checkout named by `DSH_REPO`. A full profile boot with the row enabled, slash invocation, and reload remains a separate, unperformed verification step — see `verification.md`.
 
 ## License
 

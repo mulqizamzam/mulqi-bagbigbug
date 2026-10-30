@@ -36,8 +36,13 @@
     "ledger.md",
     "verification.md",
     "CONVERSION_REPORT.md",
-    "scripts/validate_source_manifest.py"
+    "scripts/validate_source_manifest.py",
+    "scripts/live-harness-verify.mjs"
   ],
+  "scripts": {
+    "verify": "python3 scripts/validate_source_manifest.py && node tests/plugin-smoke.mjs",
+    "verify:live": "node scripts/live-harness-verify.mjs"
+  },
   "peerDependencies": {
     "@deepseek-ai/cordis": "0.2.1-rc.2",
     "@deepseek-ai/dsh-skill": "0.2.1-rc.2",

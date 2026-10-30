@@ -84,8 +84,14 @@ def main() -> int:
     entry = (ROOT / 'index.js').read_text(encoding='utf-8').strip()
     if "export { name, inject, apply } from './src/provider.js'" not in entry: fail('index.js is not the thin provider entrypoint')
     provider = (ROOT / 'src/provider.js').read_text(encoding='utf-8')
-    for token in ('BUNDLED_SKILL_RANK', 'ctx.skills.registerProvider', 'PHASE_SAFETY_PREAMBLE', 'createProvider(control.signal, BUNDLED_SKILL_RANK)'):
+    for token in ('BUNDLED_SKILL_RANK', 'ctx.skills.registerProvider', 'PHASE_SAFETY_PREAMBLE', 'createProvider(control.signal,'):
         if token not in provider: fail('provider is missing required contract: ' + token)
+    # SkillRegistry.registerProvider() calls the factory synchronously and reads
+    # provider.name off the return value. An async factory yields a Promise, the
+    # registry cannot read a name from it, and the provider is silently skipped,
+    # so the shape is asserted rather than a decorative code literal.
+    if 'registerProvider(async' in provider: fail('registerProvider factory must be synchronous, not async')
+    if 'export function apply(ctx)' not in provider: fail('provider must export a synchronous apply(ctx)')
     catalog = (ROOT / 'src/catalog.js').read_text(encoding='utf-8')
     if 'sourceGitBlobSha1' not in catalog or 'phase-10-self-duplicate-check' not in catalog: fail('catalog lacks phase provenance/coverage')
     safety = (ROOT / 'src/safety.js').read_text(encoding='utf-8')
