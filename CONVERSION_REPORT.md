@@ -44,4 +44,6 @@ python3 scripts/validate_source_manifest.py --npm-pack-manifest /tmp/bagbigbug-p
 - Target repository: https://github.com/mulqizamzam/mulqi-bagbigbug
 - Branch: `main` (existing history retained; no reinitialization or force push).
 - Pre-refactor head: `7cdb372bf18668143a181a5f7594582fc59da28b`.
-- Refactor commit: pending until the commit is created.
+- Refactor implementation: [`fe6cdf6`](https://github.com/mulqizamzam/mulqi-bagbigbug/commit/fe6cdf614379b3e07957af7a51de89abe56b6b18).
+- CI evidence: [run 41020319530 — success](https://github.com/mulqizamzam/mulqi-bagbigbug/actions/runs/41020319530), including source/hash, JSON, syntax, smoke-test, and npm pack checks.
+- Verification report: `verification.md` records green checks and outstanding live-profile validation.
