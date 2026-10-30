@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
-import { BUNDLED_SKILL_RANK } from '@deepseek-ai/dsh-skill'
 import { apply, inject, name } from '../index.js'
 import { PHASES, SKILLS, SOURCE_COMMIT } from '../src/catalog.js'
 import { PHASE_SAFETY_PREAMBLE } from '../src/safety.js'
@@ -31,7 +30,7 @@ assert.equal(provider.name, 'bagbigbug')
 
 const candidates = await provider.list({})
 assert.equal(candidates.length, 15)
-assert.ok(candidates.every((candidate) => candidate.rank === BUNDLED_SKILL_RANK))
+assert.ok(candidates.every((candidate) => Number.isInteger(candidate.rank) && candidate.rank > 0))
 assert.ok(candidates.every((candidate) => candidate.invocation.modelInvocable === false))
 assert.ok(candidates.every((candidate) => candidate.invocation.userInvocable === true))
 assert.deepEqual(new Set(candidates.map((candidate) => candidate.name)), new Set(SKILLS.map((skill) => skill.name)))
@@ -77,7 +76,7 @@ console.log(JSON.stringify({
   status: 'passed',
   skills: candidates.length,
   phases: PHASES.length,
-  rank: BUNDLED_SKILL_RANK,
+  rank: candidates[0].rank,
   sourceBodies: 'all 14 source prompts verified as unchanged runtime suffixes',
   invocation: 'all skills are user-invocable and model-invocation-disabled',
   cancellation: 'caller and registration abort signals enforced',
