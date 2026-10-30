@@ -1,7 +1,6 @@
 /** DeepSeek Harness skill-provider adapter; all prompt bodies remain source-backed. */
 import { readFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
-import { BUNDLED_SKILL_RANK } from '@deepseek-ai/dsh-skill'
 import { INVOCATION_POLICY, PROVIDER_NAME, SKILLS } from './catalog.js'
 import { PHASE_SAFETY_PREAMBLE } from './safety.js'
 
@@ -31,13 +30,13 @@ function toCandidate(skill) {
     provider: PROVIDER_NAME,
     source: 'bundled',
     resourceBase: skill.kind === 'phase' ? PHASE_RESOURCE_BASE : ROUTER_RESOURCE_BASE,
-    rank: BUNDLED_SKILL_RANK,
+    rank: bundledSkillRank,
     locator: skill.name,
     metadata: skill.metadata,
   }
 }
 
-function createProvider(registrationSignal) {
+export function createProvider(registrationSignal, bundledSkillRank) {
   return Object.freeze({
     name: PROVIDER_NAME,
     async list(options = {}) {
@@ -70,5 +69,8 @@ function createProvider(registrationSignal) {
 
 /** Register the provider and return Cordis' registration disposer. */
 export function apply(ctx) {
-  return ctx.skills.registerProvider((control) => createProvider(control.signal))
+  return ctx.skills.registerProvider(async (control) => {
+    const { BUNDLED_SKILL_RANK } = await import('@deepseek-ai/dsh-skill')
+    return createProvider(control.signal, BUNDLED_SKILL_RANK)
+  })
 }
