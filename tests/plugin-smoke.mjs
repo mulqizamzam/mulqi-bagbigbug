@@ -48,7 +48,7 @@ await assert.rejects(provider.list({ signal: aborted.signal }), /cancelled by te
 await assert.rejects(provider.get(routerCandidate, { signal: aborted.signal }), /cancelled by test/)
 
 const entry = await readFile(new URL('../index.js', import.meta.url), 'utf8')
-assert.match(entry, /export \\{ name, inject, apply \\} from '\\.\\/src\\/provider\\.js'/)
+assert.ok(entry.includes("export { name, inject, apply } from './src/provider.js'"))
 const packageJson = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'))
 assert.ok(packageJson.files.includes('src/'))
 const patch = await readFile(new URL('../cordis.patch.yml', import.meta.url), 'utf8')
