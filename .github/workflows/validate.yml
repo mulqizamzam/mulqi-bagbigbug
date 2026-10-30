@@ -1,4 +1,4 @@
-name: Validate bagbigbug source fidelity and plugin surface
+name: Validate bagbigbug fidelity and modular provider
 
 on:
   push:
@@ -15,14 +15,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: '3.x'
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24"
-      - name: Validate source-to-target completeness and hashes
+          node-version: '24'
+      - name: Validate complete upstream source snapshot
         run: python3 scripts/validate_source_manifest.py
-      - name: Check package and metadata JSON
+      - name: Check JSON metadata
         run: |
           python3 -m json.tool package.json >/dev/null
           python3 -m json.tool locale/en.json >/dev/null
@@ -30,10 +30,13 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           node --check index.js
+          node --check src/catalog.js
+          node --check src/safety.js
+          node --check src/provider.js
           node --check tests/plugin-smoke.mjs
-      - name: Smoke-test plugin registration and phase loading
+      - name: Smoke-test Harness provider contract and source loading
         run: node tests/plugin-smoke.mjs
-      - name: Inspect npm package contents
+      - name: Verify npm package contains every source and runtime file
         run: |
           npm pack --dry-run --json > /tmp/bagbigbug-pack.json
           python3 scripts/validate_source_manifest.py --npm-pack-manifest /tmp/bagbigbug-pack.json
