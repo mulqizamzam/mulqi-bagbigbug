@@ -23,24 +23,73 @@ bagbigbug adapts the upstream bug-bounty prompt workflow into a DeepSeek Harness
 - **Authorization boundaries:** imported prompt text cannot override host instructions, safety controls, user constraints, or program scope.
 - **Repeatable validation:** CI checks source hashes and coverage, metadata, JavaScript syntax, mocked provider behavior, and npm package contents.
 
-## Install
+## Installation
 
-The repository contains the package source; it is **not currently published to npm or another registry**. After publishing `bagbigbug@0.1.0` to a registry accessible to your Harness profile, install it with:
+> **Publication status:** `bagbigbug@0.1.0` is not currently published to npm. You can install it directly from GitHub, from a local clone, or from a packaged tarball. The npm command below applies only after a registry release exists.
+
+Choose the method that fits your setup. Replace `<profile>` with the DeepSeek Harness profile you actually use (for example, `web`).
+
+### Method 1 — Install directly from GitHub
+
+This is the quickest method; it does not require cloning the repository first.
+
+```sh
+dsh plugin --profile <profile> add github:mulqizamzam/mulqi-bagbigbug#main
+```
+
+For a reproducible install, replace `main` with a reviewed commit SHA:
+
+```sh
+dsh plugin --profile <profile> add github:mulqizamzam/mulqi-bagbigbug#<commit-sha>
+```
+
+### Method 2 — Clone the repository and install locally
+
+Use this method if you want to inspect the source before installation, or modify/test your own checkout.
+
+```sh
+git clone https://github.com/mulqizamzam/mulqi-bagbigbug.git
+cd mulqi-bagbigbug
+dsh plugin --profile <profile> add .
+```
+
+The final command installs the checkout in the current directory into the selected profile. Keep the clone in place while using this local-path installation.
+
+### Method 3 — Build a tarball and install it
+
+Useful for moving the plugin to another machine or installing it in a restricted/offline environment. Build the tarball on a machine with the repository:
+
+```sh
+git clone https://github.com/mulqizamzam/mulqi-bagbigbug.git
+cd mulqi-bagbigbug
+npm pack
+```
+
+This produces `bagbigbug-0.1.0.tgz`. Copy that file to the target machine, then run:
+
+```sh
+dsh plugin --profile <profile> add ./bagbigbug-0.1.0.tgz
+```
+
+The tarball contains the files declared in `package.json`; it does not require the Git checkout to remain on the target machine.
+
+### Method 4 — Install from npm (after publication)
+
+Once the package is published to a registry available to your Harness profile:
 
 ```sh
 dsh plugin --profile <profile> add bagbigbug@0.1.0
 ```
 
-Replace `<profile>` with the name of your DeepSeek Harness profile.
+### Activate and verify
 
-### Enable the plugin
+1. Restart the selected DeepSeek Harness profile after adding the bundle so its configuration layer is loaded.
+2. Open the Plugins UI for that profile and find `bagbigbug`.
+3. Enable the `bagbigbug` provider. Its configuration row is intentionally disabled by default.
+4. Invoke `/bagbigbug` to open the workflow router.
+5. Invoke a phase only when you intend to use it, for example `/bagbigbug-phase-00-recon`.
 
-1. Open the DeepSeek Harness Plugins UI for the intended profile.
-2. Find `bagbigbug` and enable it. The bundle deliberately installs the provider row in a disabled state.
-3. Start with `/bagbigbug` to open the workflow router.
-4. Invoke an individual phase only when you intend to use it, for example `/bagbigbug-phase-00-recon`.
-
-Installation alone does not execute prompts or perform target testing.
+Installation and activation do not execute prompts or perform target testing. The plugin remains opt-in and phase skills require explicit user invocation.
 
 ## Skills
 
